@@ -45,6 +45,7 @@ class Video extends CI_Controller {
 	
 	public function watch(){
 		$data['videos'] = $this->Video_model->get_all();
+		$data['base_url'] = $this->config->item('base_url');
 		$this->load->view('watch', $data);
 	}
 
