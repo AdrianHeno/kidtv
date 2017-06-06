@@ -11,6 +11,7 @@
     </head>
     <body>
         <h2 style="margin-top:0px">Video <?php echo $button ?></h2>
+		<p>If you wish to download the video and store it on the web server just include the video ID and not the full youtube.com URL in the URL field.</p>
         <form action="<?php echo $action; ?>" method="post">
 	    <div class="form-group">
             <label for="varchar">Title <?php echo form_error('title') ?></label>

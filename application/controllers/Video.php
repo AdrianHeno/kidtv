@@ -48,6 +48,29 @@ class Video extends CI_Controller {
 		$data['base_url'] = $this->config->item('base_url');
 		$this->load->view('watch', $data);
 	}
+	
+	private function download($id){
+		$format = 'mp4'; //the MIME type of the video. e.g. video/mp4, video/webm, etc.
+		parse_str(file_get_contents("http://youtube.com/get_video_info?video_id=".$id),$info); //decode the data
+		//print_r($info);
+		//die();
+		$streams = $info['url_encoded_fmt_stream_map']; //the video's location info
+		
+		$streams = explode(',',$streams);
+		
+		foreach($streams as $stream){
+			parse_str($stream,$data); //decode the stream
+			if(stripos($data['type'],$format) !== false){ //We've found the right stream with the correct format
+				$video = fopen($data['url'].'&amp;signature='.$data['sig'],'r'); //the video
+				$file = fopen('videos/' . $id . '.' . $format,'w');
+				stream_copy_to_stream($video,$file); //copy it to the file
+				fclose($video);
+				fclose($file);
+				return true;
+				break;
+			}
+		}
+	}
 
     public function read($id) 
     {
@@ -85,9 +108,13 @@ class Video extends CI_Controller {
             $this->create();
         } else {
             $data = array(
-		'title' => $this->input->post('title',TRUE),
-		'url' => $this->input->post('url',TRUE),
-	    );
+				'title' => $this->input->post('title',TRUE),
+				'url' => $this->input->post('url',TRUE),
+			);
+			
+			if(strpos($data['url'], 'http') == false && $this->download($data['url']) == true){
+				$data['url'] = $this->config->item('base_url') . '/videos/' . $data['url'] . '.mp4';
+			}
 
             $this->Video_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');

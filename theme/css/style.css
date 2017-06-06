@@ -255,7 +255,9 @@ p.cta-sub-title
 }
 .filimg
 {
-	margin-bottom: 30px;
+	margin: 10px;
+	float: left;
+	
 }
 .fil-btn .active
 {

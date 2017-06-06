@@ -45,12 +45,21 @@
 <?php
 		$i = 1;
 		foreach($videos as $video){
-			$video_url = explode('v=', $video->url);
+			if(strpos($video->url, 'youtube') == true){
+				$video_url = explode('v=', $video->url);
 ?>
 								<div class="filimg category-1 category-3" data-myorder="<?php echo $i ?>">
 									<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $video_url[1] ?>?rel=0" frameborder="0" allowfullscreen></iframe>
 								</div>
 <?php
+			}else{
+?>
+								<video width="560" height="315" controls class="filimg">
+									<source src="<?php echo $video->url ?>" type="video/mp4">
+								Your browser does not support the video tag.
+								</video>
+<?php
+			}
 			$i++;
 		}
 		?>
