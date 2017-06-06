@@ -55,5 +55,17 @@
             // instead of a settings object
         ]
     });
+	
+	//Only allow a single video to play at a time
+	$("video").each(function() {
+		this.pauseOthers = function(event) {
+			$('video').addClass('stopvideo');
+			$(this).removeClass('stopvideo');
+			$('.stopvideo').each(function() {
+				this.pause();
+			});
+		};
+		this.addEventListener("play", this.pauseOthers.bind(this), false);
+	});
     
 })(jQuery);

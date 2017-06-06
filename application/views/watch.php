@@ -54,7 +54,7 @@
 <?php
 			}else{
 ?>
-								<video width="560" height="315" controls class="filimg">
+								<video width="560" height="315" controls class="filimg video">
 									<source src="<?php echo $video->url ?>" type="video/mp4">
 								Your browser does not support the video tag.
 								</video>
