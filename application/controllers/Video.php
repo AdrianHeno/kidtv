@@ -49,18 +49,18 @@ class Video extends CI_Controller {
 		$this->load->view('watch', $data);
 	}
 	
-	private function download($id){
+	public function download($id){
+		ini_set('max_execution_time', 0);//Don't know how long the download is going to take, increase the time out
 		$format = 'mp4'; //the MIME type of the video. e.g. video/mp4, video/webm, etc.
+		$quality = 'medium';
 		parse_str(file_get_contents("http://youtube.com/get_video_info?video_id=".$id),$info); //decode the data
-		//print_r($info);
-		//die();
 		$streams = $info['url_encoded_fmt_stream_map']; //the video's location info
-		
 		$streams = explode(',',$streams);
 		
 		foreach($streams as $stream){
 			parse_str($stream,$data); //decode the stream
-			if(stripos($data['type'],$format) !== false){ //We've found the right stream with the correct format
+			//TODO: Need to figure out how to select lower quality videos for download
+			if(stripos($data['type'],$format) !== false/* && stripos($data['quality'],$quality) !== false*/){ //We've found the right stream with the correct format
 				$video = fopen($data['url'].'&amp;signature='.$data['sig'],'r'); //the video
 				$file = fopen('videos/' . $id . '.' . $format,'w');
 				stream_copy_to_stream($video,$file); //copy it to the file

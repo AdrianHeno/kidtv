@@ -53,8 +53,10 @@
 								</div>
 <?php
 			}else{
+				$video_id = explode('/', $video->url);
+				$video_id = explode('.', $video_id[5]);
 ?>
-								<video width="560" height="315" controls class="filimg video">
+								<video width="740" height="435" poster="http://i.ytimg.com/vi/<?php echo $video_id[0] ?>/hqdefault.jpg" controls class="filimg video">
 									<source src="<?php echo $video->url ?>" type="video/mp4">
 								Your browser does not support the video tag.
 								</video>
