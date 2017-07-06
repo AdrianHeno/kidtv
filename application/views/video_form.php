@@ -21,6 +21,10 @@
             <label for="varchar">Url <?php echo form_error('url') ?></label>
             <input type="text" class="form-control" name="url" id="url" placeholder="Url" value="<?php echo $url; ?>" />
         </div>
+		<div class="form-group">
+            <label for="int">Category Id <?php echo form_error('category_id') ?></label>
+            <input type="text" class="form-control" name="category_id" id="category_id" placeholder="Category Id" value="<?php echo $category_id; ?>" />
+        </div>
 	    <input type="hidden" name="id" value="<?php echo $id; ?>" /> 
 	    <button type="submit" class="btn btn-primary"><?php echo $button ?></button> 
 	    <a href="<?php echo site_url('video') ?>" class="btn btn-default">Cancel</a>

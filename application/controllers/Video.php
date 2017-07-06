@@ -80,6 +80,7 @@ class Video extends CI_Controller {
 		'id' => $row->id,
 		'title' => $row->title,
 		'url' => $row->url,
+		'category_id' => $row->category_id,
 	    );
             $this->load->view('video_read', $data);
         } else {
@@ -91,11 +92,12 @@ class Video extends CI_Controller {
     public function create() 
     {
         $data = array(
-            'button' => 'Create',
-            'action' => site_url('video/create_action'),
+		'button' => 'Create',
+		'action' => site_url('video/create_action'),
 	    'id' => set_value('id'),
 	    'title' => set_value('title'),
 	    'url' => set_value('url'),
+		'category_id' => set_value('category_id'),
 	);
         $this->load->view('video_form', $data);
     }
@@ -128,11 +130,12 @@ class Video extends CI_Controller {
 
         if ($row) {
             $data = array(
-                'button' => 'Update',
-                'action' => site_url('video/update_action'),
-		'id' => set_value('id', $row->id),
-		'title' => set_value('title', $row->title),
-		'url' => set_value('url', $row->url),
+			'button' => 'Update',
+			'action' => site_url('video/update_action'),
+			'id' => set_value('id', $row->id),
+			'title' => set_value('title', $row->title),
+			'url' => set_value('url', $row->url),
+			'category_id' => set_value('category_id', $row->category_id),
 	    );
             $this->load->view('video_form', $data);
         } else {
@@ -149,9 +152,10 @@ class Video extends CI_Controller {
             $this->update($this->input->post('id', TRUE));
         } else {
             $data = array(
-		'title' => $this->input->post('title',TRUE),
-		'url' => $this->input->post('url',TRUE),
-	    );
+				'title' => $this->input->post('title',TRUE),
+				'url' => $this->input->post('url',TRUE),
+				'category_id' => $this->input->post('category_id',TRUE),
+			);
 
             $this->Video_model->update($this->input->post('id', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
@@ -177,7 +181,7 @@ class Video extends CI_Controller {
     {
 	$this->form_validation->set_rules('title', 'title', 'trim|required');
 	$this->form_validation->set_rules('url', 'url', 'trim|required');
-
+	$this->form_validation->set_rules('category_id', 'category id', 'trim|required');
 	$this->form_validation->set_rules('id', 'id', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
