@@ -1,7 +1,7 @@
  <!DOCTYPE html>
 <html lang="en" class=" js no-touch">
 <head>
-  <title>Tempo | HTML5 Responsive Bootstrap Template</title>
+  <title>Kids Tv</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?php echo $base_url?>/theme/css/bootstrap.min.css">
@@ -17,53 +17,90 @@
     ======================================================= -->
 </head>
 <body>
-	<!--BANNER START-->
-	<div id="banner" class="section-padding">
-		<div class="container">
-			<div class="row">
-				<div class="jumbotron">
-				  <h1 class="small">Welcome To <span class="bold">Tempo</span></h1>
-				  <p class="big">Multipurpose HTML5 Bootstrap template.</p>
-				  <a href="#" class="btn btn-banner">Learn More<i class="fa fa-send"></i></a>
-				</div>
+	<!--HEADER START-->
+	<div class="main-navigation navbar-fixed-top">
+		<nav class="navbar navbar-default">
+			<div class="container">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+			    <span class="icon-bar"></span>
+			    <span class="icon-bar"></span>
+			    <span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="<?php echo $base_url?>">Kids Tv</a>
 			</div>
-		</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+			  <ul class="nav navbar-nav navbar-right">
+			    <li class="active"><a href="<?php echo $base_url . '/video/watch' ?>">Home</a></li>
+					<?php
+					foreach($categories as $category){
+					?>
+					<li><a href="<?php echo $base_url . '/video/watch/' . $category->id?>"><Service><?php echo $category->title ?></a></li>
+					<?php
+					}
+					?>
+			  </ul>
+			</div>
+		  </div>
+		</nav>
 	</div>
-	<!--BANNER END-->
-
+	<!--HEADER END-->
+	<div class="section-padding">
+		
+	</div>
 	<!--PORTFOLIO START-->
 	<div id="portfolio" class="section-padding">
 		<div class="container">
 			<div class="row">
 				<div class="page-title text-center">
-					<h1>Our Privious Works</h1>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor <br>incididunt ut labore et dolore magna aliqua. </p>
+					<h1>Videos - <?php echo $current_category ?></h1>
 					<hr class="pg-titl-bdr-btm"></hr>
 				</div>
 				<div class="port-sec">
 					<div id="Container">
 <?php
 		$i = 1;
-		foreach($videos as $video){
-			if(strpos($video->url, 'youtube') == true){
-				$video_url = explode('v=', $video->url);
-?>
-								<div class="filimg category-1 category-3" data-myorder="<?php echo $i ?>">
-									<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $video_url[1] ?>?rel=0" frameborder="0" allowfullscreen></iframe>
-								</div>
-<?php
-			}else{
-				$video_id = explode('/', $video->url);
-				$video_id = explode('.', $video_id[5]);
-?>
-								<video width="740" height="435" poster="http://i.ytimg.com/vi/<?php echo $video_id[0] ?>/hqdefault.jpg" controls class="filimg video">
-									<source src="<?php echo $video->url ?>" type="video/mp4">
-								Your browser does not support the video tag.
-								</video>
-<?php
+		if(count($videos) > 1){
+			foreach($videos as $video){
+				if(strpos($video->url, 'youtube') == true){
+					$video_url = explode('v=', $video->url);
+	?>
+									<div class="filimg category-1 category-3" data-myorder="<?php echo $i ?>">
+										<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $video_url[1] ?>?rel=0" frameborder="0" allowfullscreen></iframe>
+									</div>
+	<?php
+				}else{
+					$video_id = explode('/', $video->url);
+					$video_id = explode('.', $video_id[5]);
+	?>
+									<video width="740" height="435" poster="http://i.ytimg.com/vi/<?php echo $video_id[0] ?>/hqdefault.jpg" controls class="filimg video">
+										<source src="<?php echo $video->url ?>" type="video/mp4">
+									Your browser does not support the video tag.
+									</video>
+	<?php
+				}
+				$i++;
 			}
-			$i++;
+		}else{
+			if(strpos($videos->url, 'youtube') == true){
+					$video_url = explode('v=', $videos->url);
+		?>
+										<div class="filimg category-1 category-3" data-myorder="<?php echo $i ?>">
+											<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $video_url[1] ?>?rel=0" frameborder="0" allowfullscreen></iframe>
+										</div>
+		<?php
+					}else{
+						$video_id = explode('/', $videos->url);
+						$video_id = explode('.', $video_id[5]);
+		?>
+										<video width="740" height="435" poster="http://i.ytimg.com/vi/<?php echo $video_id[0] ?>/hqdefault.jpg" controls class="filimg video">
+											<source src="<?php echo $videos->url ?>" type="video/mp4">
+										Your browser does not support the video tag.
+										</video>
+		<?php
+					}
 		}
+		
 		?>
 					</div>
 				</div>

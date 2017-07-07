@@ -7,6 +7,7 @@ class Video extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('Video_model');
+		$this->load->model('Category_model');
         $this->load->library('form_validation');
     }
 	
@@ -43,8 +44,17 @@ class Video extends CI_Controller {
         $this->load->view('video_list', $data);
     }
 	
-	public function watch(){
-		$data['videos'] = $this->Video_model->get_all();
+	public function watch($category_id = null){
+		if(is_numeric($category_id)){
+			$data['videos'] = $this->Video_model->get_by_category($category_id);
+			$current_category = $this->Category_model->get_by_id($category_id);
+			$data['current_category'] = $current_category->title;
+		}else{
+			$data['videos'] = $this->Video_model->get_all();
+			$data['current_category'] = 'All';
+		}
+		
+		$data['categories'] = $this->Category_model->get_all();
 		$data['base_url'] = $this->config->item('base_url');
 		$this->load->view('watch', $data);
 	}
@@ -99,6 +109,7 @@ class Video extends CI_Controller {
 	    'url' => set_value('url'),
 		'category_id' => set_value('category_id'),
 	);
+		$data['categories'] = $this->Category_model->get_all();
         $this->load->view('video_form', $data);
     }
     
@@ -137,6 +148,7 @@ class Video extends CI_Controller {
 			'url' => set_value('url', $row->url),
 			'category_id' => set_value('category_id', $row->category_id),
 	    );
+			$data['categories'] = $this->Category_model->get_all();
             $this->load->view('video_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');

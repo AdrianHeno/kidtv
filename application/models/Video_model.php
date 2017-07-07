@@ -28,6 +28,14 @@ class Video_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
+	
+	// get data by id
+    function get_by_category($category_id)
+    {
+
+        $this->db->where('category_id', $category_id);
+        return $this->db->get($this->table)->row();
+    }
     
     // get total rows
     function total_rows($q = NULL) {

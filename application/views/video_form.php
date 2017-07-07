@@ -22,8 +22,17 @@
             <input type="text" class="form-control" name="url" id="url" placeholder="Url" value="<?php echo $url; ?>" />
         </div>
 		<div class="form-group">
-            <label for="int">Category Id <?php echo form_error('category_id') ?></label>
-            <input type="text" class="form-control" name="category_id" id="category_id" placeholder="Category Id" value="<?php echo $category_id; ?>" />
+			<label for="int">Category Id <?php echo form_error('category_id') ?></label>
+            <select class="form-control" name="category_id" id="category_id">
+				<option selected="selected" value="<?php echo $category_id; ?>"><?php echo $category_id; ?></option>
+				<?php
+				foreach($categories as $category){
+				?>
+				<option value="<?php echo $category->id; ?>"><?php echo $category->title; ?></option>
+				<?php
+				}
+				?>
+			</select>
         </div>
 	    <input type="hidden" name="id" value="<?php echo $id; ?>" /> 
 	    <button type="submit" class="btn btn-primary"><?php echo $button ?></button> 
