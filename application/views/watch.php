@@ -31,11 +31,22 @@
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 			  <ul class="nav navbar-nav navbar-right">
-			    <li class="active"><a href="<?php echo $base_url . '/video/watch' ?>">Home</a></li>
+					<?php
+					$active = '';
+					if($current_category_id === 0){//Stuff for adding active state to current page menu item
+						$active = 'active';
+					}
+					?>
+					<li class="<?php echo $active ?>"><a href="<?php echo $base_url . '/video/watch' ?>">Home</a></li>
 					<?php
 					foreach($categories as $category){
+						$active = '';
+
+						if($category->id == $current_category_id){
+							$active = 'active';
+						}
 					?>
-					<li><a href="<?php echo $base_url . '/video/watch/' . $category->id?>"><Service><?php echo $category->title ?></a></li>
+					<li class="<?php echo $active ?>"><a href="<?php echo $base_url . '/video/watch/' . $category->id?>"><Service><?php echo $category->title ?></a></li>
 					<?php
 					}
 					?>
@@ -109,33 +120,11 @@
 	</div>
 	<!--PORTFOLIO END-->
 
-   
-	<!--CTA2 START-->
-	<div class="cta2">
-		<div class="container">
-			<div class="row white text-center">
-				<h3 class="wd75 fnt-24">“Every Thing is designed. Few Things are Designed well.” - Brian Reed</h3>
-				<p class="cta-sub-title"></p>
-				<a href="#" class="btn btn-default">Request A Quote</a>
-			</div>
-		</div>
-	</div>
-	<!--CTA2 END-->
-
 	<!--FOOTER START-->
 	<footer class="footer section-padding">
 		<div class="container">
 			<div class="row">
-				<div style="visibility: visible; animation-name: zoomIn;" class="col-sm-12 text-center wow zoomIn">
-					<h3>Follow us on</h3>
-					<div class="footer_social">
-						<ul>
-							<li><a class="f_facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-							<li><a class="f_twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-							<li><a class="f_google" href="#"><i class="fa fa-google-plus"></i></a></li>
-							<li><a class="f_linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-						</ul>
-					</div>																
+				<div style="visibility: visible; animation-name: zoomIn;" class="col-sm-12 text-center wow zoomIn">															
 				</div><!--- END COL -->
 			</div><!--- END ROW -->
 		</div><!--- END CONTAINER -->

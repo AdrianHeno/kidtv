@@ -49,9 +49,11 @@ class Video extends CI_Controller {
 			$data['videos'] = $this->Video_model->get_by_category($category_id);
 			$current_category = $this->Category_model->get_by_id($category_id);
 			$data['current_category'] = $current_category->title;
+			$data['current_category_id'] = $current_category->id;
 		}else{//Get all videos
 			$data['videos'] = $this->Video_model->get_all();
 			$data['current_category'] = 'All';
+			$data['current_category_id'] = 0;
 		}
 		
 		
