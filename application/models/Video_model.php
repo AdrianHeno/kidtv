@@ -34,7 +34,7 @@ class Video_model extends CI_Model
     {
 
         $this->db->where('category_id', $category_id);
-        return $this->db->get($this->table)->row();
+        return $this->db->get($this->table)->result();
     }
     
     // get total rows

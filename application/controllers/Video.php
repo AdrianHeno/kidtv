@@ -45,14 +45,15 @@ class Video extends CI_Controller {
     }
 	
 	public function watch($category_id = null){
-		if(is_numeric($category_id)){
+		if(is_numeric($category_id)){//If a category ID is passed in, only get the videos for that category
 			$data['videos'] = $this->Video_model->get_by_category($category_id);
 			$current_category = $this->Category_model->get_by_id($category_id);
 			$data['current_category'] = $current_category->title;
-		}else{
+		}else{//Get all videos
 			$data['videos'] = $this->Video_model->get_all();
 			$data['current_category'] = 'All';
 		}
+		
 		
 		$data['categories'] = $this->Category_model->get_all();
 		$data['base_url'] = $this->config->item('base_url');
